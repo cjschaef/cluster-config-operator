@@ -574,6 +574,10 @@ type IBMCloudPlatformStatus struct {
 	// CISInstanceCRN is the CRN of the Cloud Internet Services instance managing
 	// the DNS zone for the cluster's base domain
 	CISInstanceCRN string `json:"cisInstanceCRN,omitempty"`
+
+	// DNSInstanceCRN is the CRN of the DNS Services instance managing the DNS zone
+	// for the cluster's base domain
+	DNSInstanceCRN string `json:"dnsInstanceCRN,omitempty"`
 }
 
 // KubevirtPlatformSpec holds the desired state of the kubevirt infrastructure provider.
@@ -662,6 +666,10 @@ type PowerVSPlatformStatus struct {
 	// CISInstanceCRN is the CRN of the Cloud Internet Services instance managing
 	// the DNS zone for the cluster's base domain
 	CISInstanceCRN string `json:"cisInstanceCRN,omitempty"`
+
+	// DNSInstanceCRN is the CRN of the DNS Services instance managing the DNS zone
+	// for the cluster's base domain
+	DNSInstanceCRN string `json:"dnsInstanceCRN,omitempty"`
 }
 
 // AlibabaCloudPlatformSpec holds the desired state of the Alibaba Cloud infrastructure provider.
@@ -707,9 +715,7 @@ type AlibabaCloudResourceTag struct {
 // This only includes fields that can be modified in the cluster.
 type NutanixPlatformSpec struct {
 	// prismCentral holds the endpoint address and port to access the Nutanix Prism Central.
-	// When a cluster-wide proxy is installed, by default, this endpoint will be accessed via the proxy.
-	// Should you wish for communication with this endpoint not to be proxied, please add the endpoint to the
-	// proxy spec.noProxy list.
+	// When a cluster-wide proxy is installed, this endpoint will not be accessed via the proxy.
 	// +kubebuilder:validation:Required
 	PrismCentral NutanixPrismEndpoint `json:"prismCentral"`
 
@@ -747,9 +753,7 @@ type NutanixPrismElementEndpoint struct {
 	Name string `json:"name"`
 
 	// endpoint holds the endpoint address and port data of the Prism Element (cluster).
-	// When a cluster-wide proxy is installed, by default, this endpoint will be accessed via the proxy.
-	// Should you wish for communication with this endpoint not to be proxied, please add the endpoint to the
-	// proxy spec.noProxy list.
+	// When a cluster-wide proxy is installed, this endpoint will not be accessed via the proxy.
 	// +kubebuilder:validation:Required
 	Endpoint NutanixPrismEndpoint `json:"endpoint"`
 }

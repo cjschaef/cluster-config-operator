@@ -97,7 +97,7 @@ spec:
                         - prismElements
                       properties:
                         prismCentral:
-                          description: prismCentral holds the endpoint address and port to access the Nutanix Prism Central. When a cluster-wide proxy is installed, by default, this endpoint will be accessed via the proxy. Should you wish for communication with this endpoint not to be proxied, please add the endpoint to the proxy spec.noProxy list.
+                          description: prismCentral holds the endpoint address and port to access the Nutanix Prism Central. When a cluster-wide proxy is installed, this endpoint will not be accessed via the proxy.
                           type: object
                           required:
                             - address
@@ -124,7 +124,7 @@ spec:
                               - name
                             properties:
                               endpoint:
-                                description: endpoint holds the endpoint address and port data of the Prism Element (cluster). When a cluster-wide proxy is installed, by default, this endpoint will be accessed via the proxy. Should you wish for communication with this endpoint not to be proxied, please add the endpoint to the proxy spec.noProxy list.
+                                description: endpoint holds the endpoint address and port data of the Prism Element (cluster). When a cluster-wide proxy is installed, this endpoint will not be accessed via the proxy.
                                 type: object
                                 required:
                                   - address
@@ -403,6 +403,9 @@ spec:
                         cisInstanceCRN:
                           description: CISInstanceCRN is the CRN of the Cloud Internet Services instance managing the DNS zone for the cluster's base domain
                           type: string
+                        dnsInstanceCRN:
+                          description: DNSInstanceCRN is the CRN of the DNS Services instance managing the DNS zone for the cluster's base domain
+                          type: string
                         location:
                           description: Location is where the cluster has been deployed
                           type: string
@@ -467,6 +470,9 @@ spec:
                       properties:
                         cisInstanceCRN:
                           description: CISInstanceCRN is the CRN of the Cloud Internet Services instance managing the DNS zone for the cluster's base domain
+                          type: string
+                        dnsInstanceCRN:
+                          description: DNSInstanceCRN is the CRN of the DNS Services instance managing the DNS zone for the cluster's base domain
                           type: string
                         region:
                           description: region holds the default Power VS region for new Power VS resources created by the cluster.

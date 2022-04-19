@@ -1136,6 +1136,7 @@ var map_IBMCloudPlatformStatus = map[string]string{
 	"resourceGroupName": "ResourceGroupName is the Resource Group for new IBMCloud resources created for the cluster.",
 	"providerType":      "ProviderType indicates the type of cluster that was created",
 	"cisInstanceCRN":    "CISInstanceCRN is the CRN of the Cloud Internet Services instance managing the DNS zone for the cluster's base domain",
+	"dnsInstanceCRN":    "DNSInstanceCRN is the CRN of the DNS Services instance managing the DNS zone for the cluster's base domain",
 }
 
 func (IBMCloudPlatformStatus) SwaggerDoc() map[string]string {
@@ -1206,7 +1207,7 @@ func (KubevirtPlatformStatus) SwaggerDoc() map[string]string {
 
 var map_NutanixPlatformSpec = map[string]string{
 	"":              "NutanixPlatformSpec holds the desired state of the Nutanix infrastructure provider. This only includes fields that can be modified in the cluster.",
-	"prismCentral":  "prismCentral holds the endpoint address and port to access the Nutanix Prism Central. When a cluster-wide proxy is installed, by default, this endpoint will be accessed via the proxy. Should you wish for communication with this endpoint not to be proxied, please add the endpoint to the proxy spec.noProxy list.",
+	"prismCentral":  "prismCentral holds the endpoint address and port to access the Nutanix Prism Central. When a cluster-wide proxy is installed, this endpoint will not be accessed via the proxy.",
 	"prismElements": "prismElements holds one or more endpoint address and port data to access the Nutanix Prism Elements (clusters) of the Nutanix Prism Central. Currently we only support one Prism Element (cluster) for an OpenShift cluster, where all the Nutanix resources (VMs, subnets, volumes, etc.) used in the OpenShift cluster are located. In the future, we may support Nutanix resources (VMs, etc.) spread over multiple Prism Elements (clusters) of the Prism Central.",
 }
 
@@ -1227,7 +1228,7 @@ func (NutanixPlatformStatus) SwaggerDoc() map[string]string {
 var map_NutanixPrismElementEndpoint = map[string]string{
 	"":         "NutanixPrismElementEndpoint holds the name and endpoint data for a Prism Element (cluster)",
 	"name":     "name is the name of the Prism Element (cluster). This value will correspond with the cluster field configured on other resources (eg Machines, PVCs, etc).",
-	"endpoint": "endpoint holds the endpoint address and port data of the Prism Element (cluster). When a cluster-wide proxy is installed, by default, this endpoint will be accessed via the proxy. Should you wish for communication with this endpoint not to be proxied, please add the endpoint to the proxy spec.noProxy list.",
+	"endpoint": "endpoint holds the endpoint address and port data of the Prism Element (cluster). When a cluster-wide proxy is installed, this endpoint will not be accessed via the proxy.",
 }
 
 func (NutanixPrismElementEndpoint) SwaggerDoc() map[string]string {
@@ -1342,6 +1343,7 @@ var map_PowerVSPlatformStatus = map[string]string{
 	"zone":             "zone holds the default zone for the new Power VS resources created by the cluster. Note: Currently only single-zone OCP clusters are supported",
 	"serviceEndpoints": "serviceEndpoints is a list of custom endpoints which will override the default service endpoints of a Power VS service.",
 	"cisInstanceCRN":   "CISInstanceCRN is the CRN of the Cloud Internet Services instance managing the DNS zone for the cluster's base domain",
+	"dnsInstanceCRN":   "DNSInstanceCRN is the CRN of the DNS Services instance managing the DNS zone for the cluster's base domain",
 }
 
 func (PowerVSPlatformStatus) SwaggerDoc() map[string]string {
@@ -1434,8 +1436,7 @@ func (IngressSpec) SwaggerDoc() map[string]string {
 }
 
 var map_IngressStatus = map[string]string{
-	"componentRoutes":  "componentRoutes is where participating operators place the current route status for routes whose hostnames and serving certificates can be customized by the cluster-admin.",
-	"defaultPlacement": "defaultPlacement is set at installation time to control which nodes will host the ingress router pods by default. The options are control-plane nodes or worker nodes.\n\nThis field works by dictating how the Cluster Ingress Operator will consider unset replicas and nodePlacement fields in IngressController resources when creating the corresponding Deployments.\n\nSee the documentation for the IngressController replicas and nodePlacement fields for more information.\n\nWhen omitted, the default value is Workers",
+	"componentRoutes": "componentRoutes is where participating operators place the current route status for routes whose hostnames and serving certificates can be customized by the cluster-admin.",
 }
 
 func (IngressStatus) SwaggerDoc() map[string]string {
@@ -1583,11 +1584,24 @@ func (NodeStatus) SwaggerDoc() map[string]string {
 
 var map_WorkerLatencyProfileStatus = map[string]string{
 	"":           "WorkerLatencyProfileStatus provides status information about the WorkerLatencyProfile rollout",
-	"conditions": "conditions describes the state of the WorkerLatencyProfile and related components (Kubelet or Controller Manager or Kube API Server) whether progressing, degraded or complete",
+	"conditions": "conditions describes the state of the WorkerLatencyProfile and related components (Kubelet or Controller Manager or Kube API Server)",
 }
 
 func (WorkerLatencyProfileStatus) SwaggerDoc() map[string]string {
 	return map_WorkerLatencyProfileStatus
+}
+
+var map_WorkerLatencyStatusCondition = map[string]string{
+	"owner":              "Owner specifies the operator that is updating this condition",
+	"type":               "type specifies the aspect reported by this condition.",
+	"status":             "status of the condition, one of True, False, Unknown.",
+	"lastTransitionTime": "lastTransitionTime is the time of the last update to the current status property.",
+	"reason":             "reason is the CamelCase reason for the condition's current status.",
+	"message":            "message provides additional information about the current condition. This is only to be consumed by humans.  It may contain Line Feed characters (U+000A), which should be rendered as new lines.",
+}
+
+func (WorkerLatencyStatusCondition) SwaggerDoc() map[string]string {
+	return map_WorkerLatencyStatusCondition
 }
 
 var map_BasicAuthIdentityProvider = map[string]string{
